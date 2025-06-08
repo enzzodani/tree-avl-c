@@ -1,4 +1,4 @@
-#include "tree-avl.h"
+#include "../include/tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,7 +6,6 @@
 typedef struct Node Node;
 struct Node {
   int data;
-  int height;
   Node* right;
   Node* left;
 };
@@ -21,7 +20,6 @@ Node* initNode(int data) {
   }
 
   newNode->data = data;
-  newNode->height = 0;
   newNode->right = NULL;
   newNode->left = NULL;
 
@@ -29,13 +27,45 @@ Node* initNode(int data) {
   return newNode; 
 }
 
-//Aux Functions
 
 //Basic Trees Operations
-void insertNode(Node* root, Node* node) {
+Node* insertNode(Node** root, Node* node) {
+  //Root Empty
+  if ((*root) == NULL) {
+    *root = node; 
+    return node;
+  }
 
-  //Case 1: Data <= Root
+  if ((*root)->data == node->data) {
+    puts("The value already exists");
+    return *root;
+  }
   
-  //Case 2: Data > Root
+  if (node->data < (*root)->data) {
+    insertNode(&((*root)->left), node);
+  } else {
+    insertNode(&((*root)->right), node);
+  }
+
+  return node;
 }
 
+void removeNode(Node** root, int data) {
+  // root.data = data
+  if ((*root)->data == data) {
+    // doesnt have children
+    if ((*root)->left == NULL && (*root)->right == NULL) {
+    
+    *root = NULL;
+    free(*root);
+    return;
+    } else if ((*root)->left!=NULL || (*root)->right!=NULL) {
+
+    }
+    
+    //one child 
+
+    //two children
+
+  }
+}
